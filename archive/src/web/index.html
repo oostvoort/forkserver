@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Forked server manager</title>
+  <script
+    src="https://cdn.ethers.io/lib/ethers-5.5.4.umd.min.js"
+    type="application/javascript">
+  </script>
+  <script >
+    var network = (new URLSearchParams(window.location.search)).get("network")
+
+    const provider = new ethers.providers.Web3Provider(window.ethereum)
+    const signer = provider.getSigner()
+
+    console.log(signer.address);
+
+    function connectMetamask() {
+      console.log("connectMetamask");
+    }
+
+    function startNode() {
+      fetch(`http://${window.location.host}/start/${network}`)
+        .then(response => response.json())
+        .then(data => {
+          log(JSON.stringify(data))
+          connectLogs()
+        });
+
+    }
+    function resetFork() {
+      fetch(`http://${window.location.host}/fork/reset/${network}`)
+        .then(response => response.json())
+        .then(data => {
+          log(JSON.stringify(data))
+        });
+
+    }
+    function swapToMe() {
+      const token = document.getElementById("swapToken").value
+      const address = document.getElementById("swapToAddress").value
+
+      fetch(`http://${window.location.host}/swaptome/${network}?address=${address}&token=${token}`)
+        .then(response => response.json())
+        .then(data => {
+          log(JSON.stringify(data))
+        });
+
+    }
+
+    function setPrice() {
+      const token = document.getElementById("setPriceToken").value
+      const price = document.getElementById("setPriceTo").value
+
+      fetch(`http://${window.location.host}/setprice/${network}?token=${token}&price=${price}`)
+        .then(response => response.json())
+        .then(data => {
+          log(JSON.stringify(data))
+        });
+    }
+
+    function setBalance() {
+      const address = document.getElementById("balanceAddress").value
+      fetch(`http://${window.location.host}/fork/setBalance/${network}?address=${address}`)
+        .then(response => response.json())
+        .then(data => {
+          log(JSON.stringify(data))
+        });
+
+    }
+
+    function log(str){
+      document.getElementById("logContainer").append(str + '\n')
+    }
+
+    function connectLogs() {
+      var logSocket = new WebSocket(`ws://${window.location.host}/logs/${network}`);
+
+      logSocket.onmessage = function(event) {
+        if (event.data instanceof Blob) {
+          const reader = new FileReader();
+          reader.onload = () => {
+            log(reader.result);
+          };
+          reader.readAsText(event.data);
+        } else {
+          log(event.data);
+        }
+      };
+    }
+
+    connectLogs()
+  </script>
+</head>
+<body>
+<table width="100%">
+  <tr>
+    <td>
+      <table>
+        <tr>
+          <td>
+            <h1>node control</h1>
+            <button onclick="startNode()">Restart</button>
+            <button onclick="resetFork()">Reset Fork</button>
+            <button onclick="connectMetamask()">Connect Metamask</button>
+          </td>
+        </tr>
+        <tr>
+          <td>mining</td>
+        </tr>
+      </table>
+    </td>
+    <td>
+      <table>
+        <tr>
+          <td>
+            <h1>account tools</h1>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <button style="width: 10em" onclick="setBalance()">Set Balance</button>
+            <input style="width: 10em" id="balanceAddress" type=text/>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <button style="width: 10em" onclick="swapToMe()">Swap to Me</button>
+            <select style="width: 10em" id='swapToken'>
+              <option value='0xc00e94cb662c3520282e6f5717214004a7f26888'> COMP </option>
+              <option value='0x514910771af9ca656af840dff83e8264ecf986ca'> LINK </option>
+              <option value='0x6b175474e89094c44da98b954eedeac495271d0f'> DAI </option>
+            </select>
+            <input style="width: 10em" id="swapToAddress" type=text/>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <button style="width: 10em" onclick="setPrice()">Set Price</button>
+            <select style="width: 10em" id='setPriceToken'>
+              <option value='COMP'> COMP </option>
+              <option value='LINK'> LINK </option>
+              <option value='DAI'> DAI </option>
+            </select>
+            <input style="width: 10em" id="setPriceTo" type=text/>
+          </td>
+        </tr>
+      </table>
+    </td>
+    <td>
+      <h1></h1>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2"><div style="overflow-x:hidden; height:400px; width:99vw;display:flex; flex-direction:column-reverse;"><pre id="logContainer"></pre></div></td>
+  </tr>
+</table>
+
+</body>
+</html>

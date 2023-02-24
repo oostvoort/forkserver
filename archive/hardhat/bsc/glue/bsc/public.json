@@ -1,0 +1,17 @@
+{
+  "comptroller": {
+    "address": "0x3d9819210A31b4961b30EF54bE2aeD79B9c9Cd3B",
+    "implementation": {
+      "address": "0x374abb8ce19a73f2c4efad642bda76c797f19233"
+    }
+  },
+  "anchoredview": {
+    "address": "0x6D2299C48a8dD07a872FDd0F8233924872Ad1071"
+  },
+  "uniswapFactory": {
+    "address": "0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f"
+  },
+  "uniswapRouter": {
+    "address": "0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D"
+  }
+}

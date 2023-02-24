@@ -1,0 +1,5 @@
+# Build target
+/target
+
+**.pem
+/src/protobuf/forkserver.rs

@@ -1,0 +1,19 @@
+{
+  "admin": {
+    "address": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+    "note": "Address is index0 of the test mnemonic"
+  },
+  "treasury": {
+    "address": "0xB12779D4D00dB5b851834b057DF2ff6B8E87779A"
+  },
+  "gaswallet": {
+    "address": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+    "note": "Address is index0 of the test mnemonic"
+  },
+  "swapAdapter": {
+    "address": "0xB12779D4D00dB5b851834b057DF2ff6B8E87779A"
+  },
+  "sentinel": {
+    "address": "0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266"
+  }
+}

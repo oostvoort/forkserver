@@ -1,0 +1,14 @@
+[Unit]
+Description=Forkserver
+Documentation=
+After=network.target
+
+[Service]
+Environment=NODE_PORT=3001
+Type=simple
+User=ubuntu
+ExecStart=/usr/bin/node /home/hardhat/forkserver
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

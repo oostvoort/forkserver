@@ -1,0 +1,45 @@
+{
+  "PublicAccessPass": {
+    "address": "",
+    "contract": "AccessPass",
+    "settings": {
+      "name": "PublicAccessPass",
+      "symbol": "P-ADMN",
+      "accessType_": 0,
+      "topUpFeeReceiver_": "0xd3D7080FDdC88277C18D6e63Acc86c5437088b41"
+    },
+    "txHash": "0x7262784d054959171a2691ce0f57eb98475f9a438d327640506a9ff588550ff0"
+  },
+  "SpecialAccessPass": {
+    "address": "0x390d29a822C21F57B163F1173cD43382bd643401",
+    "contract": "AccessPass",
+    "settings": {
+      "name": "SpecialAccessPass",
+      "symbol": "S-ADMN",
+      "accessType_": 1,
+      "topUpFeeReceiver_": "0xd3D7080FDdC88277C18D6e63Acc86c5437088b41"
+    }
+  },
+  "ADMNStakePool": {
+    "address": "0xFb88e91a878fE2733561b0d81358D08b20Ac4328",
+    "contract": "StakePool",
+    "settings": {
+      "stakeToken_": "0xd7dd460b63c794cc40591f1929e8151a7b1c79ae",
+      "bnbPerSecond_": 100000000000000,
+      "withdrawPenalty_": 0,
+      "lockInDuration_": 2592000,
+      "penaltyBalanceReceiver_": "0xd3D7080FDdC88277C18D6e63Acc86c5437088b41"
+    }
+  },
+  "ADMNsStakePool": {
+    "address": "0xE71AC7A1ccB822423576EfFdb0B74564C49BEcBA",
+    "contract": "StakePool",
+    "settings": {
+      "stakeToken_": "0xcfcb6089a3ca0a2b0317d709077ac3fcd4d79987",
+      "bnbPerSecond_": 100000000000000,
+      "withdrawPenalty_": 0,
+      "lockInDuration_": 2592000,
+      "penaltyBalanceReceiver_": "0xd3D7080FDdC88277C18D6e63Acc86c5437088b41"
+    }
+  }
+}

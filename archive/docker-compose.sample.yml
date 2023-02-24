@@ -1,0 +1,28 @@
+version: "3.9"
+
+services:
+  liquidator_forkserver:
+    image: oostvoort/forkserver
+    ports:
+      - 8545:8545
+    env_file:
+      - .env
+    volumes:
+      - ./contracts:/opt/contracts
+      - ./contracts/glue:/opt/hardhat/${NETWORK}
+    command: ['yarn', 'start']
+    environment:
+      FORKSERVER: ${FORKSERVER}
+      NETWORK: ${NETWORK}
+      NODE_ENV: ${NODE_ENV}
+      DEBUG: ${DEBUG}
+      LOG_LEVEL: ${LOG_LEVEL}
+      TS_NODE_TRANSPILE_ONLY: ${TS_NODE_TRANSPILE_ONLY}
+      SERVER_PORT: ${SERVER_PORT}
+      HOSTNAME: ${HOSTNAME}
+      BASE_PORT: ${BASE_PORT}
+      HARDHAT_MAX_MEMORY: ${HARDHAT_MAX_MEMORY}
+      INFURA_API_KEY: ${INFURA_API_KEY}
+      QUICKNODE_PROVIDER: ${QUICKNODE_PROVIDER}
+      PRIV_KEY: ${PRIV_KEY}
+      RPC_URL: ${RPC_URL}

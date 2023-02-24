@@ -1,0 +1,52 @@
+syntax = "proto3";
+
+package forkserver;
+
+service Fork {
+  rpc BlockNumber(BlockNumberRequest) returns (BlockNumberResponse);
+  rpc SetBalance(SetBalanceRequest) returns (StandardResponse);
+  rpc Mine(MineRequest) returns (StandardResponse);
+  rpc Reset(ResetRequest) returns (StandardResponse);
+  rpc DumpState(DumpStateRequest) returns (DumpStateResponse);
+  rpc LoadState(LoadStateRequest) returns (StandardResponse);
+  rpc FundToken(FundTokenRequest) returns (StandardResponse);
+}
+
+message FundTokenRequest {
+  string token_address = 1;
+  string account_address = 2;
+  string amount = 3;
+  int32 slot = 4;
+}
+
+message ResetRequest {}
+message BlockNumberRequest {}
+message DumpStateRequest {}
+
+message LoadStateRequest {
+  string state = 1;
+}
+
+message MineRequest {
+  int32 blocks = 1;
+}
+
+message SetBalanceRequest {
+  string address = 1;
+}
+
+message StandardResponse {
+  string status = 1;
+}
+
+message DevRequest {
+  string name = 1;
+}
+
+message BlockNumberResponse {
+  string block_number = 1;
+}
+
+message DumpStateResponse {
+  string state = 1;
+}

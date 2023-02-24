@@ -1,0 +1,23 @@
+[
+  {
+    "type": "function",
+    "name": "manipulateBalance",
+    "inputs": [
+      {
+        "name": "account",
+        "type": "uint256"
+      },
+      {
+        "name": "slot",
+        "type": "uint256"
+      }
+    ],
+    "outputs": [
+      {
+        "name": "arg",
+        "type": "u64"
+      }
+    ],
+    "stateMutability": "view"
+  }
+]
