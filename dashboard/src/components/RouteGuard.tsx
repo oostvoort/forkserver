@@ -1,20 +1,34 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { useRouter } from 'next/router'
 import { useWeb3React } from '@web3-react/core'
+import { useQuery } from 'react-query'
+import { INJECTED_CONNECTOR } from '@/config/constants'
 
-
-export { RouteGuard }
 
 function RouteGuard({ children }: { children: React.ReactNode }) {
   const router = useRouter()
-  const { active } = useWeb3React()
+  const {
+    active,
+    activate,
+    deactivate
+  } = useWeb3React()
 
-
-  useEffect(() => {
-    if (router.pathname != '/' && !active) {
-      router.push('/')
+  const checkWalletConnection = useQuery(['checkWalletConnection', active, router], async () => {
+    // Disconnect wallet in index to show off that cool fox
+    if (router.pathname == '/') {
+      deactivate()
+      return
     }
-  }, [active, router])
+
+    try {
+      await activate(INJECTED_CONNECTOR)
+    } catch (e) {
+      console.error('Error auto-connecting wallet')
+      await router.push('/')
+    }
+  })
+
+  if (checkWalletConnection.isLoading) return <>loading...</>
 
   return (
     <>
@@ -22,3 +36,5 @@ function RouteGuard({ children }: { children: React.ReactNode }) {
     </>
   )
 }
+
+export default RouteGuard

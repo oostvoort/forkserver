@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react'
 // @ts-ignore
 import createLogo from '@metamask/logo'
+import meshJson from './fade-fox.json'
 
 const Fox = ({
                pxNotRatio = true,
@@ -21,7 +22,8 @@ const Fox = ({
       width,
       height,
       followMouse,
-      slowDrift
+      slowDrift,
+      meshJson
     })
 
     viewer.lookAt({

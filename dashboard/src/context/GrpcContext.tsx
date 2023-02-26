@@ -32,4 +32,4 @@ export const useGrpcContext = () => {
   return context
 }
 
-export default GrpcContext
+export default GrpcContextProvider

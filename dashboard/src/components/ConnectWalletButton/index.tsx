@@ -2,15 +2,16 @@ import React from 'react'
 import { useWeb3React } from '@web3-react/core'
 import useMetamask from '@/hooks/useMetamask'
 import { useMutation } from 'react-query'
-import { InjectedConnector } from '@web3-react/injected-connector'
 import styles from './style.module.css'
 import Fox from '@/components/Fox'
 import { useRouter } from 'next/router'
+import { INJECTED_CONNECTOR } from '@/config/constants'
 
 export default function ConnectWalletButton() {
   const {
     active,
-    activate
+    activate,
+    deactivate
   } = useWeb3React()
 
   const metamask = useMetamask()
@@ -18,16 +19,15 @@ export default function ConnectWalletButton() {
 
   const connectWalletMutation = useMutation(async () => {
       if (metamask && !metamask.isMetamask && !metamask.requestChain) return
-      const injectedConnector = new InjectedConnector({ supportedChainIds: [1337] })
-
       try {
         console.log('Connecting to blockchain...')
         if (1337 !== (window as any).ethereum.networkVersion) {
           await metamask.requestChain(1337)
         }
-        await activate(injectedConnector)
-        await router.push('/console')
+        await activate(INJECTED_CONNECTOR)
+        await router.push('/home')
       } catch (e) {
+        deactivate()
         console.error(e)
       }
     }
