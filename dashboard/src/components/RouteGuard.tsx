@@ -3,6 +3,7 @@ import { useRouter } from 'next/router'
 import { useWeb3React } from '@web3-react/core'
 import { useQuery } from 'react-query'
 import { INJECTED_CONNECTOR } from '@/config/constants'
+import Spinner from '@/components/Spinner'
 
 
 function RouteGuard({ children }: { children: React.ReactNode }) {
@@ -28,7 +29,7 @@ function RouteGuard({ children }: { children: React.ReactNode }) {
     }
   })
 
-  if (checkWalletConnection.isLoading) return <>loading...</>
+  if (checkWalletConnection.isLoading) return <Spinner/>
 
   return (
     <>

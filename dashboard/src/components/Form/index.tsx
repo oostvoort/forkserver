@@ -1,8 +1,8 @@
 export function FormTextField({
-                         label,
-                         value,
-                         onChange
-                       }: { label: string, value: string, onChange: (event: React.ChangeEvent<HTMLInputElement>) => void }) {
+                                label,
+                                value,
+                                onChange
+                              }: { label: string, value: string, onChange: (event: React.ChangeEvent<HTMLInputElement>) => void }) {
   return <div className='mb-4'>
     <label htmlFor={label} className='block text-white-700 font-bold mb-2'>{label}</label>
     <input
@@ -24,9 +24,9 @@ export function FormSubmitButton({ children }: { children: React.ReactNode }) {
 }
 
 export default function Form({
-                onSubmit,
-                children
-              }: { onSubmit: (event: React.ChangeEvent<HTMLFormElement>) => void, children: React.ReactNode }) {
+                               onSubmit,
+                               children
+                             }: { onSubmit?: (event: React.ChangeEvent<HTMLFormElement>) => void, children: React.ReactNode }) {
   return <form onSubmit={onSubmit} className='w-full max-w-sm mx-auto'>
     {children}
 

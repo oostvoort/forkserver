@@ -3,6 +3,8 @@ use std::net::SocketAddr;
 use tonic::transport::Server;
 use tower_http::cors::{Any, CorsLayer};
 
+use tonic_web::GrpcWebLayer;
+
 use crate::forkserver::fork_server::ForkServer;
 use crate::server::ForkServerService;
 
@@ -38,8 +40,9 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         .unwrap();
 
     Server::builder()
-        .accept_http1(true)
         .layer(cors)
+        .layer(GrpcWebLayer::new())
+        .accept_http1(true)
         .add_service(service)
         .add_service(reflection_service)
         .serve(addr)

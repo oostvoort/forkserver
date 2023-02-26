@@ -27,6 +27,7 @@ prost-derive = "0.11.6"
 ethers = "1.0.2"
 ethers-core = "1.0.2"
 dotenvy = "0.15.6"
+tonic-web = "0.5.0"
 
 [dev-dependencies]
 anyhow = "1"

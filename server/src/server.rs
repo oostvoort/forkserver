@@ -40,9 +40,9 @@ impl ForkServerService {
         let json_rpc_url: String = utils::get_env("FORK_JSON_RPC_URL", "https://mainnet.infura.io/v3/")
             .parse()
             .expect("Invalid FORK_RPC_URL");
-        let block_time: u64 = utils::get_env("BLOCK_TIME", "13")
-            .parse()
-            .expect("Invalid FORK_RPC_URL");
+        // let block_time: u64 = utils::get_env("BLOCK_TIME", "13")
+        //     .parse()
+        //     .expect("Invalid FORK_RPC_URL");
 
         let anvil = Anvil::new()
             .port(port)
@@ -50,7 +50,7 @@ impl ForkServerService {
             .mnemonic(mnemonic)
             .fork_block_number(block_number)
             .fork(json_rpc_url.clone())
-            .block_time(block_time)
+            // .block_time(block_time)
             .spawn();
 
         let anvil_endpoint = anvil.endpoint();

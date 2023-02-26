@@ -1,5 +1,5 @@
 import { useWeb3React } from '@web3-react/core'
-import ERC20 from '../abi/erc20.json'
+import ERC20 from '../config/abi/erc20.json'
 import { BigNumber } from '@ethersproject/bignumber'
 import { Contract, ethers } from 'ethers'
 

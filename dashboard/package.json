@@ -2,12 +2,13 @@
   "name": "dashboard",
   "version": "0.1.0",
   "private": true,
+  "proxy": "http://127.0.0.1:3000",
   "scripts": {
     "dev": "next dev --port 8080",
     "build": "next build",
     "start": "next start --port 8080",
     "lint": "next lint",
-    "generate_proto": "yarn protoc --ts_out ./src/proto --proto_path ../proto ../proto/*.proto  --experimental_allow_proto3_optional"
+    "generate_proto": "npx protoc --ts_out ./src/proto --proto_path ../proto ../proto/*.proto  --experimental_allow_proto3_optional"
   },
   "dependencies": {
     "@ethersproject/providers": "^5.7.2",
