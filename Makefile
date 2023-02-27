@@ -9,3 +9,5 @@ proto-gen:
 docker:
 	docker compose up -d
 
+docker-build-server:
+	docker build --progress=plain --rm --tag=oostvoort/forkserver:rust -f ./server/Dockerfile .

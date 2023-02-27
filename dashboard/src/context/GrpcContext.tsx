@@ -2,7 +2,7 @@ import { GrpcWebFetchTransport } from '@protobuf-ts/grpcweb-transport'
 import React from 'react'
 import { ForkClient } from '@/proto/Forkserver.client'
 
-const GRPC_SERVICE_HOST = 'http://127.0.0.1:3000'
+const GRPC_SERVICE_HOST = 'http://localhost:3000'
 
 const GRPC_TRANSPORT = new GrpcWebFetchTransport({
   baseUrl: GRPC_SERVICE_HOST,

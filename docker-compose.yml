@@ -1,0 +1,79 @@
+services:
+  forkserver:
+    image: oostvoort/forkserver:rust
+#    restart: always
+    ports:
+      - '3000:3000'
+      - '8545:8545'
+#    healthcheck:
+#      test: "curl -f http://localhost:8545 || exit 1"
+#      interval: 10s
+#      timeout: 5s
+#      retries: 100
+#      start_period: 30s
+#    networks:
+#      - graph
+#
+#  graph_node:
+#    container_name: graph_node
+#    image: graphprotocol/graph-node
+#    ports:
+#      - '8000:8000'
+#      - '8001:8001'
+#      - '8020:8020'
+#      - '8030:8030'
+#      - '8040:8040'
+#    depends_on:
+#      graph_ipfs:
+#        condition: service_started
+#      graph_db:
+#        condition: service_started
+#      graph_forkserver:
+#        condition: service_healthy
+#    environment:
+#      postgres_host: graph_db
+#      postgres_user: postgres
+#      postgres_pass: postgres123
+#      postgres_db: graph-node
+#      ipfs: 'graph_ipfs:5001'
+#      ethereum: localhost:http://graph_forkserver:8545
+#      GRAPH_LOG: info
+#      GRAPH_ETHEREUM_GENESIS_BLOCK_NUMBER: 15816444
+#      ETHEREUM_POLLING_INTERVAL: 5000
+#      ETHEREUM_REORG_THRESHOLD: 1
+#    networks:
+#      - graph
+#
+#  graph_ipfs:
+#    container_name: graph_ipfs
+#    image: ipfs/go-ipfs:v0.10.0
+#    ports:
+#      - '5001:5001'
+#    #    volumes:
+#    #      - ./data/ipfs:/data/ipfs
+#    networks:
+#      - graph
+#
+#  graph_db:
+#    container_name: graph_db
+#    image: postgres
+#    ports:
+#      - '54321:5432'
+#    command:
+#      [
+#        "postgres",
+#        "-cshared_preload_libraries=pg_stat_statements"
+#      ]
+#    environment:
+#      postgres_user: postgres
+#      POSTGRES_PASSWORD: postgres123
+#      POSTGRES_DB: graph-node
+#      PGDATA: "/data/postgres"
+#    #    volumes:
+#    #      - ./data/postgres:/var/lib/postgresql/data
+#    networks:
+#      - graph
+
+#networks:
+#  graph:
+#    name: graph

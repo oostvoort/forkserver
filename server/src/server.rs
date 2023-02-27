@@ -1,3 +1,4 @@
+use std::env;
 use std::ops::Index;
 use std::os::linux::raw::stat;
 use std::str::FromStr;
@@ -40,21 +41,24 @@ impl ForkServerService {
         let json_rpc_url: String = utils::get_env("FORK_JSON_RPC_URL", "https://mainnet.infura.io/v3/")
             .parse()
             .expect("Invalid FORK_RPC_URL");
-        // let block_time: u64 = utils::get_env("BLOCK_TIME", "13")
-        //     .parse()
-        //     .expect("Invalid FORK_RPC_URL");
+
+        let home = env::var("HOME").expect("Error reading HOME env");
+        let args = vec!["--host", "0.0.0.0"];
 
         let anvil = Anvil::new()
+            .args(args)
+            .path(format!("{home}/.foundry/bin/anvil"))
             .port(port)
             .chain_id(chain_id)
             .mnemonic(mnemonic)
             .fork_block_number(block_number)
             .fork(json_rpc_url.clone())
-            // .block_time(block_time)
             .spawn();
 
+        // TODO: autodeploy script here
+
         let anvil_endpoint = anvil.endpoint();
-        println!("Anvil instance running on {anvil_endpoint:?}");
+        println!("Anvil instance running on 0.0.0.0:8545");
         let provider = Provider::<Http>::try_from(anvil_endpoint)
             .expect("Unable to get anvil provider");
 

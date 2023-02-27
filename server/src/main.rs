@@ -24,7 +24,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     dotenvy::from_filename(".env").expect(".env file not found");
 
     let server_port = utils::get_env("SERVER_PORT", "3000");
-    let addr: SocketAddr = format!("127.0.0.1:{server_port}").parse()?;
+    let addr: SocketAddr = format!("0.0.0.0:{server_port}").parse()?;
     println!("Forkserver listening on {}", addr);
 
     let cors = CorsLayer::new()
