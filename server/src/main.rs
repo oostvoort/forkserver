@@ -8,9 +8,9 @@ use tonic_web::GrpcWebLayer;
 use crate::forkserver::fork_server::ForkServer;
 use crate::server::ForkServerService;
 
+mod model;
 mod server;
 mod utils;
-mod model;
 
 pub mod forkserver {
     include!("protobuf/forkserver.rs");

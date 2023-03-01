@@ -1,7 +1,7 @@
-use std::collections::BTreeMap;
 use ethers::prelude::{Address, Bytes};
 use ethers_core::types::U256;
 use serde::{Deserialize, Serialize};
+use std::collections::BTreeMap;
 
 #[derive(Serialize, Deserialize, Clone, Debug, Default)]
 pub struct SerializableState {
