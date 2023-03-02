@@ -1,4 +1,4 @@
-import { useMutation } from 'react-query'
+import { useMutation, useQuery }from '@tanstack/react-query'
 import { useWeb3React } from '@web3-react/core'
 import { useState } from 'react'
 import { useGrpcContext } from '@/context/GrpcContext'
@@ -8,7 +8,7 @@ import Spinner from '@/components/Spinner'
 import { isAddress } from 'ethers/lib/utils'
 
 
-export function FundEthForm() {
+function FundEthCard() {
   const { account } = useWeb3React()
   const { forkClient } = useGrpcContext()
 
@@ -43,3 +43,4 @@ export function FundEthForm() {
 }
 
 
+export default FundEthCard

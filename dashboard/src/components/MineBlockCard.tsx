@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from 'react-query'
+import { useMutation, useQuery }from '@tanstack/react-query'
 import { useGrpcContext } from '@/context/GrpcContext'
 import Card from '@/components/Card'
 import Form from '@/components/Form'
@@ -7,10 +7,10 @@ import Slider from '@/components/Slider'
 import { useState } from 'react'
 
 
-export function MineBlockForm() {
+function MineBlockCard() {
   const { forkClient } = useGrpcContext()
 
-  const [blocks, setBlocks] = useState(50)
+  const [blocks, setBlocks] = useState(1_000)
 
   const mineBlockMutation = useMutation(async () => {
     try {
@@ -23,9 +23,8 @@ export function MineBlockForm() {
 
   const blockNumber = useQuery(['blockNumber'], async () => {
     const result = await forkClient.blockNumber({})
-    console.warn({ result })
     return result.response.blockNumber
-  }, { refetchInterval: 5000 })
+  })
 
 
   function handleMineBlock() {
@@ -35,9 +34,10 @@ export function MineBlockForm() {
   return <Card title={`Mine block ${blockNumber.isSuccess ? `(${blockNumber.data})` : ''}`}>
     <Form>
       <MineBlock onMineBlock={handleMineBlock()} />
-      <Slider value={blocks} onChange={setBlocks} />
+      <Slider min={1} max={10_000} step={1} value={blocks} onChange={setBlocks} />
     </Form>
   </Card>
 }
 
 
+export default MineBlockCard

@@ -1,4 +1,4 @@
-import { useMutation } from 'react-query'
+import { useMutation, useQuery }from '@tanstack/react-query'
 import { useWeb3React } from '@web3-react/core'
 import { useState } from 'react'
 import useGetBalanceOfSlot from '@/hooks/useGetBalanceOfSlot'
@@ -6,11 +6,17 @@ import { useGrpcContext } from '@/context/GrpcContext'
 import Card from '@/components/Card'
 import Form, { FormSubmitButton, FormTextField } from '@/components/Form'
 import Spinner from '@/components/Spinner'
-import { isAddress } from 'ethers/lib/utils'
+import { formatUnits, isAddress } from 'ethers/lib/utils'
+import { Contract } from 'ethers'
+import ERC20 from '@/config/abi/erc20.json'
+import { denominateNumber } from '@/utils/text'
 
 
-export function FundTokenForm() {
-  const { account } = useWeb3React()
+function FundTokenCard() {
+  const {
+    account,
+    library
+  } = useWeb3React()
   const { forkClient } = useGrpcContext()
 
   const [tokenAddress, setTokenAddress] = useState('0xdac17f958d2ee523a2206206994597c13d831ec7')
@@ -25,7 +31,7 @@ export function FundTokenForm() {
       await forkClient.fundToken({
         tokenAddress,
         accountAddress: accountToFund,
-        amount: '9999999999999999999999999',
+        amount: '999999999999',
         slot: balanceOfSlot
       })
     } catch (e: any) {
@@ -46,9 +52,22 @@ export function FundTokenForm() {
     fundTokenMutation.mutate()
   }
 
+  const tokenInfoQuery = useQuery(['balance', tokenAddress, accountToFund], async () => {
+    const token = new Contract(tokenAddress, ERC20, library)
+    const tokenDecimals = await token.decimals()
+    const tokenSymbol = await token.symbol()
+    return {
+      balance: formatUnits(await token.balanceOf(accountToFund), tokenDecimals),
+      symbol: tokenSymbol
+    }
+  })
+
+  const balance = tokenInfoQuery.isSuccess ? `${denominateNumber(Number(tokenInfoQuery.data.balance))} ${tokenInfoQuery.data.symbol}` : ''
+  const accountLabel = `Account (${balance})`
+
   return <Card title={'Fund Token'}>
     <Form onSubmit={handleSubmit}>
-      <FormTextField label={'Account'} value={accountToFund}
+      <FormTextField label={accountLabel} value={accountToFund}
                      onChange={(event) => setAccountToFund(event.target.value)} />
       <FormTextField label={'Token'} value={tokenAddress} onChange={(event) => setTokenAddress(event.target.value)} />
       <FormTextField label={'Token Holder'} value={tokenHolder}
@@ -59,3 +78,4 @@ export function FundTokenForm() {
 }
 
 
+export default FundTokenCard

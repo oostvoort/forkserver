@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function useMetamask() {
+function useMetamask() {
 
   function isMetamask() {
     return (window as any).ethereum && (window as any).ethereum.isMetaMask;
@@ -41,3 +41,4 @@ export default function useMetamask() {
     requestChain
   }
 }
+export default useMetamask

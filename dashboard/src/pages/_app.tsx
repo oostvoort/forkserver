@@ -1,13 +1,13 @@
 import type { AppProps } from 'next/app'
 import { Web3Provider } from '@ethersproject/providers'
-import { QueryClient, QueryClientProvider } from 'react-query'
+import { QueryClient, QueryClientProvider }from '@tanstack/react-query'
 import { Web3ReactProvider } from '@web3-react/core'
 import RouteGuard from '@/components/RouteGuard'
 import GrpcContextProvider from '@/context/GrpcContext'
 import Head from 'next/head'
 import "../styles/globals.css"
 
-export default function App({
+function App({
                               Component,
                               pageProps
                             }: AppProps) {
@@ -37,3 +37,4 @@ export default function App({
     </QueryClientProvider>
   </>
 }
+export default App

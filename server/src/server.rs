@@ -3,19 +3,16 @@ use std::str::FromStr;
 
 use ethers::prelude::*;
 use ethers_core::abi::{AbiEncode, Token};
-use ethers_core::utils::Anvil;
+use ethers_core::utils::{Anvil, AnvilInstance};
 use serde_json::json;
 use tonic::{Request, Response, Status};
 
+use crate::forkserver::{BlockNumberRequest, BlockNumberResponse, FundTokenRequest, IncreaseTimeRequest, LoadStateRequest, MineRequest, ResetRequest, SaveStateRequest, SaveStateResponse, SetBalanceRequest, StandardResponse};
 use crate::forkserver::fork_server::Fork;
-use crate::forkserver::{
-    BlockNumberRequest, BlockNumberResponse, FundTokenRequest, LoadStateRequest, MineRequest,
-    ResetRequest, SaveStateRequest, SaveStateResponse, SetBalanceRequest, StandardResponse,
-};
 use crate::utils;
 
 pub struct ForkServerService {
-    // save instance here so we can drop it later
+    _anvil: AnvilInstance,
     provider: Provider<Http>,
     block_number: u64,
     json_rpc_url: String,
@@ -33,8 +30,8 @@ impl ForkServerService {
             "FORK_MNEMONIC",
             "test test test test test test test test test test test junk",
         )
-        .parse()
-        .expect("Invalid MNEMONIC");
+            .parse()
+            .expect("Invalid MNEMONIC");
         let block_number: u64 = utils::get_env("FORK_BLOCK_NUMBER", "1")
             .parse()
             .expect("Invalid FORK_BLOCK_NUMBER");
@@ -46,7 +43,7 @@ impl ForkServerService {
         let home = env::var("HOME").expect("Error reading HOME env");
         let args = vec!["--host", "0.0.0.0"];
 
-        let anvil = Anvil::new()
+        let _anvil = Anvil::new()
             .args(args)
             .path(format!("{home}/.foundry/bin/anvil"))
             .port(port)
@@ -56,14 +53,15 @@ impl ForkServerService {
             .fork(json_rpc_url.clone())
             .spawn();
 
-        // TODO: autodeploy script here
+        // TODO: autodeploy script here?
 
-        let anvil_endpoint = anvil.endpoint();
+        let anvil_endpoint = _anvil.endpoint();
         println!("Anvil instance running on 0.0.0.0:8545");
         let provider =
             Provider::<Http>::try_from(anvil_endpoint).expect("Unable to get anvil provider");
 
         ForkServerService {
+            _anvil,
             provider,
             json_rpc_url,
             block_number,
@@ -81,7 +79,7 @@ impl Fork for ForkServerService {
             .provider
             .request("eth_blockNumber", ())
             .await
-            .expect("Failed setting balance");
+            .expect("Failed getting blocknumber");
         let block_number = block_number.to_string();
 
         println!("block_number {block_number}");
@@ -123,6 +121,22 @@ impl Fork for ForkServerService {
             .request("anvil_mine", [blocks])
             .await
             .expect("Failed mining block");
+
+        Ok(Response::new(StandardResponse {
+            status: "Ok 👌".to_string(),
+        }))
+    }
+
+    async fn increase_time(&self, request: Request<IncreaseTimeRequest>) -> Result<Response<StandardResponse>, Status> {
+        let request: IncreaseTimeRequest = request.into_inner();
+        let seconds: i32 = request.seconds;
+        println!("Increasing time by {seconds} seconds");
+
+        let _: i32 = self
+            .provider
+            .request("evm_increaseTime", [seconds])
+            .await
+            .expect("Failed increasing time");
 
         Ok(Response::new(StandardResponse {
             status: "Ok 👌".to_string(),

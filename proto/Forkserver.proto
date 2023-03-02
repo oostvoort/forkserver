@@ -7,10 +7,12 @@ service Fork {
   rpc SetBalance(SetBalanceRequest) returns (StandardResponse);
   rpc Mine(MineRequest) returns (StandardResponse);
   rpc Reset(ResetRequest) returns (StandardResponse);
-  rpc DumpState(DumpStateRequest) returns (DumpStateResponse);
+  rpc SaveState(SaveStateRequest) returns (SaveStateResponse);
   rpc LoadState(LoadStateRequest) returns (StandardResponse);
   rpc FundToken(FundTokenRequest) returns (StandardResponse);
+  rpc IncreaseTime(IncreaseTimeRequest) returns (StandardResponse);
 }
+
 
 message FundTokenRequest {
   string token_address = 1;
@@ -21,7 +23,7 @@ message FundTokenRequest {
 
 message ResetRequest {}
 message BlockNumberRequest {}
-message DumpStateRequest {}
+message SaveStateRequest {}
 
 message LoadStateRequest {
   string state = 1;
@@ -47,6 +49,10 @@ message BlockNumberResponse {
   string block_number = 1;
 }
 
-message DumpStateResponse {
+message SaveStateResponse {
   string state = 1;
+}
+
+message IncreaseTimeRequest {
+  int32 seconds = 1;
 }

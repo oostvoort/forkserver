@@ -1,16 +1,18 @@
 use std::net::SocketAddr;
 
 use tonic::transport::Server;
-use tower_http::cors::{Any, CorsLayer};
-
 use tonic_web::GrpcWebLayer;
+use tower_http::cors::{Any, CorsLayer};
 
 use crate::forkserver::fork_server::ForkServer;
 use crate::server::ForkServerService;
 
 mod model;
 mod server;
-mod utils;
+
+pub mod utils {
+    include!("../src/utils.rs");
+}
 
 pub mod forkserver {
     include!("protobuf/forkserver.rs");

@@ -1,13 +1,13 @@
 import React from 'react'
 import { useWeb3React } from '@web3-react/core'
 import useMetamask from '@/hooks/useMetamask'
-import { useMutation } from 'react-query'
+import { useMutation }from '@tanstack/react-query'
 import styles from './style.module.css'
 import Fox from '@/components/Fox'
 import { useRouter } from 'next/router'
 import { INJECTED_CONNECTOR } from '@/config/constants'
 
-export default function ConnectWalletButton() {
+function ConnectWalletButton() {
   const {
     active,
     activate,
@@ -48,3 +48,4 @@ export default function ConnectWalletButton() {
   )
 }
 
+export default ConnectWalletButton

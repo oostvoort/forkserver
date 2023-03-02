@@ -1,7 +1,7 @@
 import styles from './main.module.css'
 import ConnectWalletButton from '@/components/ConnectWalletButton'
 
-export default function Home() {
+function Home() {
 
   return (
     <>
@@ -11,3 +11,4 @@ export default function Home() {
     </>
   )
 }
+export default Home

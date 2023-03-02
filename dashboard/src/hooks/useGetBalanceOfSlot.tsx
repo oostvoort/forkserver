@@ -3,7 +3,7 @@ import ERC20 from '../config/abi/erc20.json'
 import { BigNumber } from '@ethersproject/bignumber'
 import { Contract, ethers } from 'ethers'
 
-export default function useGetBalanceOfSlot() {
+function useGetBalanceOfSlot() {
   const {
     library
   } = useWeb3React()
@@ -39,3 +39,4 @@ export default function useGetBalanceOfSlot() {
     throw Error(`Unable to find slot for ${tokenAddress}`)
   }
 }
+export default useGetBalanceOfSlot

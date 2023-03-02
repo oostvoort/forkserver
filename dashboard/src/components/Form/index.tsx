@@ -23,7 +23,7 @@ export function FormSubmitButton({ children }: { children: React.ReactNode }) {
   </div>
 }
 
-export default function Form({
+function Form({
                                onSubmit,
                                children
                              }: { onSubmit?: (event: React.ChangeEvent<HTMLFormElement>) => void, children: React.ReactNode }) {
@@ -32,3 +32,4 @@ export default function Form({
 
   </form>
 }
+export default Form

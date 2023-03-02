@@ -1,7 +1,7 @@
 import React from 'react'
 import { useRouter } from 'next/router'
 import { useWeb3React } from '@web3-react/core'
-import { useQuery } from 'react-query'
+import { useQuery } from '@tanstack/react-query'
 import { INJECTED_CONNECTOR } from '@/config/constants'
 import Spinner from '@/components/Spinner'
 
@@ -27,9 +27,20 @@ function RouteGuard({ children }: { children: React.ReactNode }) {
       console.error('Error auto-connecting wallet')
       await router.push('/')
     }
+  }, {
+    cacheTime: Infinity,
+    staleTime: Infinity,
+    refetchOnMount: false,
+    refetchOnReconnect: false,
+    refetchOnWindowFocus: false,
+    refetchIntervalInBackground: false,
+    refetchInterval: false
   })
 
-  if (checkWalletConnection.isLoading) return <Spinner/>
+  if (checkWalletConnection.isLoading) return (
+    <div className={'flex items-center justify-center h-screen w-screen mx-auto'}>
+      <Spinner />
+    </div>)
 
   return (
     <>

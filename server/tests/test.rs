@@ -1,30 +1,38 @@
 #[cfg(test)]
 mod tests {
-    use std::str::FromStr;
-
-    use ethers::contract::Contract;
-    use ethers::core::k256::elliptic_curve::consts::U160;
-    use ethers::prelude::{abigen, Address, Http, Middleware, Provider, U256};
-    use ethers::providers::ProviderExt;
-    use ethers_core::abi;
-    use ethers_core::abi::{Abi, AbiEncode, Token};
-    use ethers_core::types::Chain;
+    use ethers::core::k256::elliptic_curve::bigint::U64;
+    use ethers::prelude::{Http, Provider};
+    use serde::{Deserialize, Serialize};
 
     #[tokio::test]
     async fn it_works() {
         let provider = Provider::<Http>::try_from("http://localhost:8545".to_string()).unwrap();
 
-        dbg!(&provider);
+        #[derive(Debug, Default, Clone, PartialEq, Eq, Deserialize, Serialize)]
+        pub struct TxpoolStatus {
+            pending: String,
+            queued: String,
+        }
 
-        let chain_id = provider
-            .get_chainid()
+        let tx_pool_status: TxpoolStatus = provider
+            .request("txpool_status", ())
             .await
-            .expect("Error fetching chain id");
+            .expect("Failed fetching txpool_status");
 
-        println!("{chain_id}");
-        dbg!(&provider);
+        dbg!(tx_pool_status);
 
-        // let result: String  = provider.request("eth_chainId", ()).await.expect("Failed funding token");
-        // dbg!(result);
+
+        // #[derive(Debug, Default, Clone, PartialEq, Eq, Deserialize, Serialize)]
+        // pub struct TxPoolContent {
+        //     pending: BTreeMap<Address, BTreeMap<String, Transaction>>,
+        //     queued: BTreeMap<Address, BTreeMap<String, Transaction>>,
+        // }
+        //
+        // let tx_pool_status: TxPoolContent = provider
+        //     .request("txpool_content", ())
+        //     .await
+        //     .expect("Failed fetching txpool_status");
+        //
+        // dbg!(tx_pool_status);
     }
 }
