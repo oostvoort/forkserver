@@ -33,9 +33,11 @@ function IncreaseTimeCard() {
   // }
 
   return <Card title={"Increase Time"}>
-    <Slider min={1} max={10_000} step={1} value={timeToIncrease} onChange={setTimeToIncrease} />
-    <Button width={'full'} isLoading={increaseTimeMutation.isLoading}
-            onClick={() => increaseTimeMutation.mutate()}>Save</Button>
+    <div className={"flex flex-col gap-4"}>
+      <Slider min={1} max={10_000} step={1} value={timeToIncrease} onChange={setTimeToIncrease} />
+      <Button width={'full'} isLoading={increaseTimeMutation.isLoading}
+              onClick={() => increaseTimeMutation.mutate()}>Save</Button>
+    </div>
   </Card>
 }
 
