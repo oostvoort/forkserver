@@ -12,8 +12,8 @@ function Home() {
         <FundTokenCard />
         <FundEthCard />
         <MineBlockCard />
-        <StateManagementCard/>
-        <IncreaseTimeCard/>
+        <StateManagementCard />
+        <IncreaseTimeCard />
       </div>
     </div>
   )

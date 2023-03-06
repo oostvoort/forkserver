@@ -18,7 +18,7 @@ function RouteGuard({ children }: { children: React.ReactNode }) {
     // Disconnect wallet in index to show off that cool fox
     if (router.pathname == '/') {
       deactivate()
-      return
+      return true
     }
 
     try {
@@ -27,6 +27,8 @@ function RouteGuard({ children }: { children: React.ReactNode }) {
       console.error('Error auto-connecting wallet')
       await router.push('/')
     }
+
+    return true
   }, {
     cacheTime: Infinity,
     staleTime: Infinity,

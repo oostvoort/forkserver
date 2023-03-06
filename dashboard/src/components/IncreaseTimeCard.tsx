@@ -32,8 +32,8 @@ function IncreaseTimeCard() {
   //   fundEthMutation.mutate()
   // }
 
-  return <Card title={"Increase Time"}>
-    <div className={"flex flex-col gap-4"}>
+  return <Card title={'Increase Time'}>
+    <div className={'flex flex-col gap-4'}>
       <Slider min={1} max={10_000} step={1} value={timeToIncrease} onChange={setTimeToIncrease} />
       <Button width={'full'} isLoading={increaseTimeMutation.isLoading}
               onClick={() => increaseTimeMutation.mutate()}>Save</Button>

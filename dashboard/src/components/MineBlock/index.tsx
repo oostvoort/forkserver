@@ -1,6 +1,5 @@
 import { useRef, useState } from 'react'
 import styles from './mineblock.module.css'
-import { useGrpcContext } from '@/context/GrpcContext'
 
 function MineBlock({ onMineBlock }: { onMineBlock: () => void }) {
   const gifRef = useRef(null)

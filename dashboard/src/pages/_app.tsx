@@ -1,16 +1,16 @@
 import type { AppProps } from 'next/app'
 import { Web3Provider } from '@ethersproject/providers'
-import { QueryClient, QueryClientProvider }from '@tanstack/react-query'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { Web3ReactProvider } from '@web3-react/core'
 import RouteGuard from '@/components/RouteGuard'
 import GrpcContextProvider from '@/context/GrpcContext'
 import Head from 'next/head'
-import "../styles/globals.css"
+import '../styles/globals.css'
 
 function App({
-                              Component,
-                              pageProps
-                            }: AppProps) {
+               Component,
+               pageProps
+             }: AppProps) {
   const library = (provider: any): Web3Provider => {
     const lib = new Web3Provider(provider)
     lib.pollingInterval = 12000
@@ -37,4 +37,5 @@ function App({
     </QueryClientProvider>
   </>
 }
+
 export default App

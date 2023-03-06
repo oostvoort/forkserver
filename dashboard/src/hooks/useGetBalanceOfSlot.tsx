@@ -39,4 +39,5 @@ function useGetBalanceOfSlot() {
     throw Error(`Unable to find slot for ${tokenAddress}`)
   }
 }
+
 export default useGetBalanceOfSlot

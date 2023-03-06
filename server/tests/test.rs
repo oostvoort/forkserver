@@ -1,6 +1,5 @@
 #[cfg(test)]
 mod tests {
-    use ethers::core::k256::elliptic_curve::bigint::U64;
     use ethers::prelude::{Http, Provider};
     use serde::{Deserialize, Serialize};
 
@@ -20,7 +19,6 @@ mod tests {
             .expect("Failed fetching txpool_status");
 
         dbg!(tx_pool_status);
-
 
         // #[derive(Debug, Default, Clone, PartialEq, Eq, Deserialize, Serialize)]
         // pub struct TxPoolContent {

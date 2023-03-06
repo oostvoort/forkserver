@@ -24,12 +24,13 @@ export function FormSubmitButton({ children }: { children: React.ReactNode }) {
 }
 
 function Form({
-                               onSubmit,
-                               children
-                             }: { onSubmit?: (event: React.ChangeEvent<HTMLFormElement>) => void, children: React.ReactNode }) {
+                onSubmit,
+                children
+              }: { onSubmit?: (event: React.ChangeEvent<HTMLFormElement>) => void, children: React.ReactNode }) {
   return <form onSubmit={onSubmit} className='w-full max-w-sm mx-auto'>
     {children}
 
   </form>
 }
+
 export default Form

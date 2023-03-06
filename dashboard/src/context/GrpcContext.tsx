@@ -1,26 +1,34 @@
 import { GrpcWebFetchTransport } from '@protobuf-ts/grpcweb-transport'
-import React from 'react'
+import React, { useMemo } from 'react'
 import { ForkClient } from '@/proto/Forkserver.client'
+import { ENV } from '@/config/constants'
+import useConfigStore from '@/config/store'
 
-const GRPC_SERVICE_HOST = 'http://localhost:3000'
-
-const GRPC_TRANSPORT = new GrpcWebFetchTransport({
-  baseUrl: GRPC_SERVICE_HOST,
-  format: 'binary'
-})
 
 interface IGrpcContext {
   forkClient: ForkClient
 }
 
 const defaultValue: IGrpcContext = {
-  forkClient: new ForkClient(GRPC_TRANSPORT)
+  forkClient: new ForkClient(new GrpcWebFetchTransport({
+    baseUrl: ENV.FORK_SERVER_ENDPOINT,
+    format: 'binary'
+  }))
 }
 
 const GrpcContext = React.createContext<IGrpcContext>(defaultValue)
 
 export const GrpcContextProvider = ({ children }: { children: React.ReactNode }) => {
-  return <GrpcContext.Provider value={defaultValue}>{children}</GrpcContext.Provider>
+  const forkServerEndpoint = useConfigStore((state) => state.forkServerEndpoint)
+
+  const forkClient = useMemo<ForkClient>(() => {
+    return new ForkClient(new GrpcWebFetchTransport({
+      baseUrl: forkServerEndpoint,
+      format: 'binary'
+    }))
+  }, [forkServerEndpoint])
+
+  return <GrpcContext.Provider value={{ forkClient }}>{children}</GrpcContext.Provider>
 }
 
 export const useGrpcContext = () => {

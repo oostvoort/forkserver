@@ -1,4 +1,4 @@
-import { useMutation, useQuery }from '@tanstack/react-query'
+import { useMutation } from '@tanstack/react-query'
 import { useWeb3React } from '@web3-react/core'
 import { useState } from 'react'
 import { useGrpcContext } from '@/context/GrpcContext'

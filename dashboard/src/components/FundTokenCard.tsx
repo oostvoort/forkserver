@@ -1,4 +1,4 @@
-import { useMutation, useQuery }from '@tanstack/react-query'
+import { useMutation, useQuery } from '@tanstack/react-query'
 import { useWeb3React } from '@web3-react/core'
 import { useState } from 'react'
 import useGetBalanceOfSlot from '@/hooks/useGetBalanceOfSlot'
@@ -53,6 +53,7 @@ function FundTokenCard() {
   }
 
   const tokenInfoQuery = useQuery(['balance', tokenAddress, accountToFund], async () => {
+    if (!library) throw Error('Undefined provider')
     const token = new Contract(tokenAddress, ERC20, library)
     const tokenDecimals = await token.decimals()
     const tokenSymbol = await token.symbol()
@@ -60,9 +61,10 @@ function FundTokenCard() {
       balance: formatUnits(await token.balanceOf(accountToFund), tokenDecimals),
       symbol: tokenSymbol
     }
-  })
+  }, { enabled: Boolean(library) })
 
-  const balance = tokenInfoQuery.isSuccess ? `${denominateNumber(Number(tokenInfoQuery.data.balance))} ${tokenInfoQuery.data.symbol}` : ''
+  const balance = tokenInfoQuery.isSuccess ? `${denominateNumber(
+    Number(tokenInfoQuery.data.balance))} ${tokenInfoQuery.data.symbol}` : ''
   const accountLabel = `Account (${balance})`
 
   return <Card title={'Fund Token'}>
