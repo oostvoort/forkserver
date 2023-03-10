@@ -19,7 +19,7 @@ pub mod forkserver {
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
-    dotenvy::from_filename(".env").expect(".env file not found");
+    dotenvy::from_filename(".env").unwrap_or_default();
 
     let server_port = utils::get_env("SERVER_PORT", "3000");
     let address: SocketAddr = format!("0.0.0.0:{server_port}").parse()?;
