@@ -22,10 +22,6 @@ RUN /bin/bash -c "/root/.foundry/bin/foundryup"
 WORKDIR /opt
 COPY --from=0 /opt/server/target/release/server ./
 
-# Create .env file
-# TODO: create .env using CI/CD variables
-COPY server/.env ./
-
 #CMD cargo run --release --bin server
 CMD ./server
 

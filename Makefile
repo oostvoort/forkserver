@@ -11,3 +11,6 @@ docker:
 
 docker-build-server:
 	docker build --progress=plain --rm --tag=oostvoort/forkserver:rust -f ./server/Dockerfile .
+
+docker-build-dashboard:
+	docker build --progress=plain --rm --tag=oostvoort/forkserver_dashboard:rust -f ./dashboard/Dockerfile .

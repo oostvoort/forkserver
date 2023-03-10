@@ -95,8 +95,9 @@ fabric.properties
 
 .env**
 !.env.example
+!.env.dev
+!.env.staging
+!.env.prod
 .idea
 /server/node_modules/.yarn-integrity
-/dashboard/src/proto/Forkserver.client.ts
-/dashboard/src/proto/Forkserver.ts
 /server/yarn.lock
