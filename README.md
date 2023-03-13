@@ -1,68 +1,57 @@
-TODO: fixup readme
-
-- to use webstorm "run" update the path env variable with your $PATH
-- kill $(lsof -t -i:8545)
-
-
-https://docs.rs/ethers/latest/ethers/core/utils/struct.Anvil.html
-https://book.getfoundry.sh/reference/anvil/
-
-
 <!-- ABOUT THE PROJECT -->
-## About The Project
+# About The Project
+Forking and running a local simulated Ethereum environment is essential if you want to work with DeFi or do general Ethereum development.
 
-There are many great README templates available on GitHub; however, I didn't find one that really suited my needs so I created this enhanced one. I want to create a README template so amazing that it'll be the last one you ever need -- I think this is it.
+You can use APPLICATION_NAME to simulate a local blockchain environment and test implemented smart contracts.
+You can use APPLICATION_NAME during the development cycle; This allows you to develop, deploy and test your dApps in a secure and deterministic environment.
+Smart contracts, once implemented on the blockchain, are immutable, so it is important to test and debug smart contracts before deploying them on the blockchain.
 
-Here's why:
-* Your time should be focused on creating something amazing. A project that solves a problem and helps others
-* You shouldn't be doing the same tasks over and over like creating a README from scratch
-* You should implement DRY principles to the rest of your life :smile:
+Therefore, it is important to have a local blockchain environment that can free developers from transaction fees and delays.
+APPLICATION_NAME was developed specifically for this.
+It is a local in-memory blockchain for development and testing, simulating a real Ethereum network, with multiple accounts funded with test Ether.
 
-Of course, no one template will serve all projects since your needs may be different. So I'll be adding more in the near future. You may also suggest changes by forking this repo and creating a pull request or opening an issue. Thanks to all the people have contributed to expanding this template!
+<!-- Features -->
+# Features
 
-Use the `BLANK_README.md` to get started.
+- Funding - Fund accounts with ETH or any ERC20 token
+- Fast forwarding - Mine hundreds of blocks or change the block timestamp
+- State management - Save the current state of the blockchain as a hex string which can be loaded into a fresh/restarted instance of APPLICATION_NAME to reattain the same state.
 
-## Getting Started
+<!-- Getting Started -->
+# Getting Started
+It's recommended to use docker for running locally by using the provided docker-compose.yml in this repository.
 
-This is an example of how you may give instructions on setting up your project locally.
-To get a local copy up and running follow these simple example steps.
+## Using Docker
 
 ### Prerequisites
+- [docker-engine](https://docs.docker.com/engine/install/)
+- A JSON RPC Endpoint with archive capabilities like [Infura](https://www.infura.io/), [QuickNode](https://www.quicknode.com/) or [Alchemy](https://www.alchemy.com/)
 
-This is an example of how to list things you need to use the software and how to install them.
-* npm
-  ```sh
-  npm install npm@latest -g
-  ```
-<!-- INSTALLATION -->
 ### Installation
+1. Copy the provided docker-compose.yml in this repository
+2. Configure the environment variables as needed
+3. Run `docker compose up -d`
 
-_Below is an example of how you can instruct your audience on installing and setting up your app. This template doesn't rely on any external dependencies or services._
+With the default settings: the server should be running at port 3000, the forked RPC endpoint at port 8545 and the dashboard at port 8080
 
-1. Get a free API Key at [https://example.com](https://example.com)
-2. Clone the repo
-   ```sh
-   git clone https://github.com/your_username_/Project-Name.git
-   ```
-3. Install NPM packages
-   ```sh
-   npm install
-   ```
-4. Enter your API in `config.js`
-   ```js
-   const API_KEY = 'ENTER YOUR API';
-   ```
+## Developing
+If you wish to customize or extend the functionality of the APPLICATION_NAME to suit your needs.
 
+### Prerequisites
+- Install [Rust](https://www.rust-lang.org/tools/install)
+- Install [Foundry](https://book.getfoundry.sh/getting-started/installation)
+- Install [Protocol Buffer Compiler](https://grpc.io/docs/protoc-installation)
+- Install [Protocol buffers C++ library (development files) and proto files](https://packages.debian.org/sid/libprotobuf-dev)
+- A JSON RPC Endpoint with archive capabilities like [Infura](https://www.infura.io), [QuickNode](https://www.quicknode.com) or [Alchemy](https://www.alchemy.com)
 
-<!-- USAGE EXAMPLES -->
-## Usage
+To run the webapp, cd into the dashboard directory and run `yarn install` to install dependencies then run `yarn dev` to start the NextJS application in development mode.
 
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
+To run the server, run `cargo run --bin server`. It should build and generate the files needed by the server and run on port 3000 (default)
 
 <!-- LICENSE -->
 ## License
 
-Distributed under the MIT License. See `LICENSE.txt` for more information.
+Distributed under the MIT License.
 
 <!-- CONTACT -->
 ## Contact
