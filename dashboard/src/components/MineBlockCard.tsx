@@ -10,7 +10,7 @@ import { useState } from 'react'
 function MineBlockCard() {
   const { forkClient } = useGrpcContext()
 
-  const [blocks, setBlocks] = useState(1_000)
+  const [blocks, setBlocks] = useState(500)
 
   const mineBlockMutation = useMutation(async () => {
     try {

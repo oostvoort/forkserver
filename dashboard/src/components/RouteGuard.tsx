@@ -2,8 +2,9 @@ import React from 'react'
 import { useRouter } from 'next/router'
 import { useWeb3React } from '@web3-react/core'
 import { useQuery } from '@tanstack/react-query'
-import { INJECTED_CONNECTOR } from '@/config/constants'
 import Spinner from '@/components/Spinner'
+import { InjectedConnector } from '@web3-react/injected-connector'
+import useConfigStore from '@/config/store'
 
 
 function RouteGuard({ children }: { children: React.ReactNode }) {
@@ -14,6 +15,8 @@ function RouteGuard({ children }: { children: React.ReactNode }) {
     deactivate
   } = useWeb3React()
 
+  const forkChainId = useConfigStore((state) => state.forkChainId)
+
   const checkWalletConnection = useQuery(['checkWalletConnection', active, router], async () => {
     // Disconnect wallet in index to show off that cool fox
     if (router.pathname == '/') {
@@ -22,7 +25,7 @@ function RouteGuard({ children }: { children: React.ReactNode }) {
     }
 
     try {
-      await activate(INJECTED_CONNECTOR)
+      await activate(new InjectedConnector({ supportedChainIds: [Number(forkChainId)] }))
     } catch (e) {
       console.error('Error auto-connecting wallet')
       await router.push('/')

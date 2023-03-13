@@ -48,6 +48,26 @@ To run the webapp, cd into the dashboard directory and run `yarn install` to ins
 
 To run the server, run `cargo run --bin server`. It should build and generate the files needed by the server and run on port 3000 (default)
 
+## Environment Variables
+`SERVER_PORT` (Default: 3000)  Determines where the GRPC Server will run.
+
+`FORK_PORT` (Default: 8545) Determines where the JSON RPC will run.
+
+`FORK_CHAIN_ID` (Default: 1337) Determines which chain id will be returned by the fork, important to set your metamask to this chain ID for use on the frontend  
+
+`FORK_MNEMONIC` (Default: test ... junk) Which accounts will be funded with Ether on startup
+
+`FORK_BLOCK_NUMBER` (Default: 0) What block number the fork server will start at, use 0 to start on latest block
+
+`FORK_JSON_RPC_URL` URL for the JSON RPC with archive functionality
+
+`FORK_BLOCK_TIME` (Default: 13) How many seconds before a block is mined, set to 0 to use automine mode
+
+## Metamask
+When resetting or loading state, always remember to reset your nonce by resetting your account in Metamask.
+
+Do this by going to Settings > Advanced > Reset Account 
+
 <!-- LICENSE -->
 ## License
 

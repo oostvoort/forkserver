@@ -26,6 +26,7 @@ function StateManagementCard() {
 
   const loadStateMutation = useMutation(async (state: string) => {
     try {
+      await forkClient.reset({}).response
       await forkClient.loadState({ state }).response
       alert('Loaded state')
     } catch (e: any) {
@@ -59,7 +60,7 @@ function StateManagementCard() {
               <div>{new Date(saveState.timestamp).toLocaleString()}</div>
               <div>
                 <Button color={'transparent'} onClick={() => handleCopy(saveState.state)}>📋</Button>
-                <Button onClick={() => loadStateMutation.mutate(saveState.state)}>Load</Button>
+                <Button isLoading={loadStateMutation.isLoading} onClick={() => loadStateMutation.mutate(saveState.state)}>Load</Button>
               </div>
             </div>
           )

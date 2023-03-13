@@ -16,7 +16,7 @@ use crate::forkserver::fork_server::Fork;
 use crate::utils;
 
 pub struct ForkServerService {
-    _anvil: AnvilInstance,
+    _anvil_instance: AnvilInstance,
     provider: Provider<Http>,
     block_number: u64,
     json_rpc_url: String,
@@ -48,32 +48,41 @@ impl ForkServerService {
             utils::get_env("FORK_BLOCK_TIME", "13")
                 .parse()
                 .expect("Invalid FORK_BLOCK_TIME");
-
-
         let home = env::var("HOME").expect("Error reading HOME env");
         let home = format!("{home}/.foundry/bin/anvil");
-
         let args = vec!["--host", "0.0.0.0"];
 
-        let _anvil: AnvilInstance = Anvil::new()
+        let mut anvil: Anvil = Anvil::new()
             .args(args)
             .path(home)
             .port(port)
             .chain_id(chain_id)
             .mnemonic(mnemonic)
-            .fork_block_number(block_number)
-            .block_time(block_time)
-            .fork(json_rpc_url.clone())
-            .spawn();
+            .fork(json_rpc_url.clone());
 
-        let anvil_endpoint = _anvil.endpoint();
-        println!("Anvil instance running on 0.0.0.0:8545");
+        if block_time > 0 {
+            anvil = anvil.block_time(block_time);
+        } else {
+            println!("✅ Auto mining enabled");
+        }
+
+        if block_number > 0 {
+            anvil = anvil.fork_block_number(block_number);
+        } else {
+            println!("✅ Starting on latest block");
+        }
+
+        let _anvil_instance: AnvilInstance = anvil.spawn();
+
+        let anvil_endpoint = _anvil_instance.endpoint();
+        println!("✅ Anvil instance running on 0.0.0.0:8545");
 
         let provider =
             Provider::<Http>::try_from(anvil_endpoint).expect("Unable to get anvil provider");
 
+        println!("👌 Forkserver is ready");
         ForkServerService {
-            _anvil,
+            _anvil_instance,
             provider,
             json_rpc_url,
             block_number,

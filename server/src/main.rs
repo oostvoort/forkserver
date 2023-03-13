@@ -23,7 +23,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     let server_port = utils::get_env("SERVER_PORT", "3000");
     let address: SocketAddr = format!("0.0.0.0:{server_port}").parse()?;
-    println!("Forkserver listening on {}", address);
+    println!("✅ Forkserver listening on {}", address);
 
     let cors = CorsLayer::new()
         .allow_headers(Any)

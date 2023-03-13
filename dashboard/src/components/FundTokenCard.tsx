@@ -15,7 +15,8 @@ import { denominateNumber } from '@/utils/text'
 function FundTokenCard() {
   const {
     account,
-    library
+    library,
+    active
   } = useWeb3React()
   const { forkClient } = useGrpcContext()
 
@@ -31,7 +32,7 @@ function FundTokenCard() {
       await forkClient.fundToken({
         tokenAddress,
         accountAddress: accountToFund,
-        amount: '999999999999',
+        amount: '999999999999999999',
         slot: balanceOfSlot
       })
     } catch (e: any) {

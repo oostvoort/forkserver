@@ -12,4 +12,3 @@ export const ENV = {
   FORK_CHAIN_ID: loadEnv(process.env.NEXT_PUBLIC_FORK_CHAIN_ID)
 }
 
-export const INJECTED_CONNECTOR = new InjectedConnector({ supportedChainIds: [Number(ENV.FORK_CHAIN_ID)] })

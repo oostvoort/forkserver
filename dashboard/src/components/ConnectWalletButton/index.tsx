@@ -5,8 +5,8 @@ import { useMutation } from '@tanstack/react-query'
 import styles from './style.module.css'
 import Fox from '@/components/Fox'
 import { useRouter } from 'next/router'
-import { INJECTED_CONNECTOR } from '@/config/constants'
 import useConfigStore from '@/config/store'
+import { InjectedConnector } from '@web3-react/injected-connector'
 
 function ConnectWalletButton() {
   const {
@@ -26,7 +26,7 @@ function ConnectWalletButton() {
         if (forkChainId !== (window as any).ethereum.networkVersion) {
           await metamask.requestChain(Number(forkChainId))
         }
-        await activate(INJECTED_CONNECTOR)
+        await activate(new InjectedConnector({ supportedChainIds: [Number(forkChainId)] }))
         await router.push('/home')
       } catch (e) {
         deactivate()
