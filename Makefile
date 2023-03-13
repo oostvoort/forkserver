@@ -1,7 +1,4 @@
-init: init-env docker proto-gen
-
-init-env:
-	cp .env.example .env
+init: docker proto-gen
 
 proto-gen:
 	cd dashboard && yarn && mkdir -p src/protobuf && yarn generate_proto && cd ..
