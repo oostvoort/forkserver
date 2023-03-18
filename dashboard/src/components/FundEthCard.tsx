@@ -20,7 +20,7 @@ function FundEthCard() {
     } catch (e: any) {
       if (e.message != 'unexpected response content type: application/grpc') throw e
     }
-    alert(`check ur wallet`)
+    alert(`Funded with ETH, reset your metamask wallet!`)
   }, {
     onError: (e: any) => alert(e.message)
   })

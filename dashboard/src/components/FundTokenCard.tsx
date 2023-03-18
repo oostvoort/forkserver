@@ -38,7 +38,7 @@ function FundTokenCard() {
     } catch (e: any) {
       if (e.message != 'unexpected response content type: application/grpc') throw e
     }
-    alert(`check ur wallet`)
+    alert(`Funded, reset your metamask wallet!`)
   }, {
     onError: (e: any) => alert(e.message)
   })

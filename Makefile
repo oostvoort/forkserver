@@ -7,7 +7,15 @@ docker:
 	docker compose up -d
 
 docker-build-server:
-	docker build --progress=plain --rm --tag=oostvoort/forkserver:rust -f ./server/Dockerfile .
+	docker build --progress=plain --rm --tag=oostvoort/anvil_forkserver:latest -f ./server/Dockerfile .
 
 docker-build-dashboard:
-	docker build --progress=plain --rm --tag=oostvoort/forkserver_dashboard:rust -f ./dashboard/Dockerfile .
+	docker build --progress=plain --rm --tag=oostvoort/anvil_forkserver_dashboard:latest -f ./dashboard/Dockerfile .
+
+docker-push-dashboard:
+	docker push oostvoort/anvil_forkserver_dashboard:latest
+
+docker-push-server:
+	docker push oostvoort/anvil_forkserver:latest
+
+

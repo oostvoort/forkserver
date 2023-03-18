@@ -28,6 +28,7 @@ function StateManagementCard() {
     try {
       await forkClient.reset({}).response
       await forkClient.loadState({ state }).response
+      await forkClient.mine({ blocks: 500 }).response
       alert('Loaded state')
     } catch (e: any) {
       if (e.message != 'unexpected response content type: application/grpc') throw e
