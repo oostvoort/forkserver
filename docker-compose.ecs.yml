@@ -1,0 +1,28 @@
+services:
+  caddy:
+    image: caddy:alpine
+    restart: unless-stopped
+    networks:
+      - forkserver
+    ports:
+      - '3200:3200'
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile
+
+  forkserver:
+    image: oostvoort/forkserver:rust
+    restart: unless-stopped
+    networks:
+      - forkserver
+    environment:
+      - SERVER_PORT=3000
+      - FORK_PORT=8545
+      - FORK_CHAIN_ID=31337
+      - FORK_MNEMONIC=test test test test test test test test test test test junk
+      - FORK_BLOCK_NUMBER=27825842
+      - FORK_JSON_RPC_URL=
+      - FORK_BLOCK_TIME=0
+
+networks:
+  forkserver:
+    name: forkserver

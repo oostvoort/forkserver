@@ -1,0 +1,9 @@
+http://localhost:3200
+
+handle_path /rpc* {
+	reverse_proxy http://forkserver:8545
+}
+
+handle_path /api* {
+	reverse_proxy http://forkserver:3000
+}
