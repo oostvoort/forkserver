@@ -1,6 +1,7 @@
 services:
   forkserver:
-    image: oostvoort/forkserver:rust
+    image: oostvoort/anvil_forkserver:latest
+    container_name: forkserver
     restart: unless-stopped
     ports:
       - '3000:3000'
@@ -10,11 +11,12 @@ services:
       - FORK_PORT=8545
       - FORK_CHAIN_ID=1337
       - FORK_MNEMONIC=test test test test test test test test test test test junk
-      - FORK_BLOCK_NUMBER=16669468
-      - FORK_JSON_RPC_URL=https://mainnet.infura.io/v3/
-      - FORK_BLOCK_TIME=13
+      - FORK_BLOCK_NUMBER=27954073
+      - FORK_JSON_RPC_URL=
+      - FORK_BLOCK_TIME=0
   dashboard:
-    image: oostvoort/forkserver_dashboard:rust
+    image: oostvoort/anvil_forkserver_dashboard:latest
+    container_name: forkserver-dashboard
     restart: unless-stopped
     ports:
       - '8080:8080'

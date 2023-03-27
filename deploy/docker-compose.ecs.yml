@@ -1,16 +1,16 @@
 services:
   caddy:
-    image: caddy:alpine
+    image: oostvoort/anvil_forkserver_caddy:latest
+    container_name: forkserver-caddy
     restart: unless-stopped
     networks:
       - forkserver
     ports:
       - '3200:3200'
-    volumes:
-      - ./Caddyfile:/etc/caddy/Caddyfile
 
   forkserver:
-    image: oostvoort/forkserver:rust
+    image: oostvoort/anvil_forkserver:latest
+    container_name: forkserver
     restart: unless-stopped
     networks:
       - forkserver

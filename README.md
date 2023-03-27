@@ -67,6 +67,11 @@ When resetting or loading state, always remember to reset your nonce by resettin
 
 Do this by going to Settings > Advanced > Reset Account 
 
+## Common issues
+NetworkError when attempting to fetch resource - This means that the dashboard is unable to connect to the gRPC server.
+Check if the server is properly running and note the address where it is listening.
+On the dashboard click on the gear ⚙ icon below the fox head and set the correct endpoint/chainId.
+
 <!-- LICENSE -->
 ## License
 

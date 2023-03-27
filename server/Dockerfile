@@ -19,7 +19,6 @@ RUN curl -L https://foundry.paradigm.xyz | bash
 RUN /bin/bash -c "/root/.foundry/bin/foundryup"
 
 # Copy binary from first build
-WORKDIR /opt
 COPY --from=0 /opt/server/target/release/server ./
 
 #CMD cargo run --release --bin server
