@@ -1,0 +1,117 @@
+services:
+  forkserver:
+    image: oostvoort/anvil_forkserver:latest
+    container_name: forkserver
+    restart: unless-stopped
+    #    ports:
+    #      - '3000:3000'
+    #      - '8545:8545'
+    environment:
+      - SERVER_PORT=3000
+      - FORK_PORT=8545
+      - FORK_CHAIN_ID=1337
+      - FORK_MNEMONIC=test test test test test test test test test test test junk
+      - FORK_BLOCK_NUMBER=27954073
+      - FORK_JSON_RPC_URL=
+      - FORK_BLOCK_TIME=0
+    networks:
+      - traefik
+    labels:
+      - "traefik.enable=true"
+
+      # HTTP Headers
+      - "traefik.http.middlewares.anvil_forkserver_headers.headers.customresponseheaders.X-Frame-Options=SAMEORIGIN"
+      - "traefik.http.middlewares.anvil_forkserver_headers.headers.customresponseheaders.X-XSS-Protection=1;mode=block"
+      - "traefik.http.middlewares.anvil_forkserver_headers.headers.customresponseheaders.X-Content-Type-Options=nosniff"
+
+      # HSTS Headers
+      - "traefik.http.middlewares.anvil_forkserver_headers.headers.stsincludesubdomains=false"
+      - "traefik.http.middlewares.anvil_forkserver_headers.headers.stspreload=true"
+      - "traefik.http.middlewares.anvil_forkserver_headers.headers.stsseconds=31536000"
+      - "traefik.http.middlewares.anvil_forkserver_headers.headers.isdevelopment=false"
+
+      ################### API
+      - "traefik.http.services.anvil_forkserver_api.loadbalancer.server.port=3000"
+      - "traefik.http.routers.anvil_forkserver_api.service=anvil_forkserver_api"
+      - "traefik.http.routers.anvil_forkserver_api.rule=(Host(`fork.oostvoort.work`) && PathPrefix(`/api`))"
+      - "traefik.http.routers.anvil_forkserver_api.tls.certresolver=le"
+      - "traefik.http.routers.anvil_forkserver_api.entrypoints=websecure"
+
+      # Headers
+      - "traefik.http.routers.anvil_forkserver_api.middlewares=anvil_forkserver_headers@docker"
+
+      # Strip Prefix
+      - "traefik.http.middlewares.strip_api_prefix.stripprefix.prefixes=/api"
+      - "traefik.http.routers.anvil_forkserver_api.middlewares=strip_api_prefix@docker"
+
+      # HTTP Entrypoint (redirects to HTTPS)
+      - "traefik.http.routers.anvil_forkserver_api_http.service=anvil_forkserver_api"
+      - "traefik.http.routers.anvil_forkserver_api_http.rule=(Host(`fork.oostvoort.work`) && PathPrefix(`/rpc`))"
+      - "traefik.http.routers.anvil_forkserver_api_http.entrypoints=web"
+      - "traefik.http.routers.anvil_forkserver_api_http.middlewares=anvil_forkserver_api_http@docker"
+
+      # Redirect Middleware
+      - "traefik.http.middlewares.anvil_forkserver_api_http.redirectscheme.scheme=https"
+
+      ################### RPC
+      - "traefik.http.services.anvil_forkserver_rpc.loadbalancer.server.port=8545"
+      - "traefik.http.routers.anvil_forkserver_rpc.service=anvil_forkserver_rpc"
+      - "traefik.http.routers.anvil_forkserver_rpc.rule=(Host(`fork.oostvoort.work`) && PathPrefix(`/rpc`))"
+      - "traefik.http.routers.anvil_forkserver_rpc.tls.certresolver=le"
+      - "traefik.http.routers.anvil_forkserver_rpc.entrypoints=websecure"
+
+      # Headers
+      - "traefik.http.routers.anvil_forkserver_rpc.middlewares=anvil_forkserver_headers@docker"
+
+      # Strip Prefix
+      - "traefik.http.middlewares.strip_rpc_prefix.stripprefix.prefixes=/rpc"
+      - "traefik.http.routers.anvil_forkserver_rpc.middlewares=strip_rpc_prefix@docker"
+
+      # HTTP Entrypoint (redirects to HTTPS)
+      - "traefik.http.routers.anvil_forkserver_rpc_http.service=anvil_forkserver_rpc"
+      - "traefik.http.routers.anvil_forkserver_rpc_http.rule=(Host(`fork.oostvoort.work`) && PathPrefix(`/rpc`))"
+      - "traefik.http.routers.anvil_forkserver_rpc_http.entrypoints=web"
+      - "traefik.http.routers.anvil_forkserver_rpc_http.middlewares=anvil_forkserver_rpc_http@docker"
+
+      # Redirect Middleware
+      - "traefik.http.middlewares.anvil_forkserver_rpc_http.redirectscheme.scheme=https"
+
+
+  dashboard:
+    image: oostvoort/anvil_forkserver_dashboard:latest
+    container_name: forkserver-dashboard
+    restart: unless-stopped
+    #    ports:
+    #      - '8080:8080'
+    networks:
+      - traefik
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.services.anvil_forkserver_ui.loadbalancer.server.port=8080"
+      - "traefik.http.routers.anvil_forkserver_ui.rule=Host(`fork-ui.oostvoort.work`)"
+      - "traefik.http.routers.anvil_forkserver_ui.tls.certresolver=le"
+      - "traefik.http.routers.anvil_forkserver_ui.entrypoints=websecure"
+
+      # HTTP Entrypoint (redirects to HTTPS)
+      - "traefik.http.routers.anvil_forkserver_ui_http.rule=Host(`fork-ui.oostvoort.work`)"
+      - "traefik.http.routers.anvil_forkserver_ui_http.entrypoints=web"
+      - "traefik.http.routers.anvil_forkserver_ui_http.middlewares=anvil_forkserver_ui_http@docker"
+
+      # Redirect Middleware
+      - "traefik.http.middlewares.anvil_forkserver_ui_http.redirectscheme.scheme=https"
+
+      # HTTP Headers
+      - "traefik.http.middlewares.anvil_forkserver_ui_header.headers.customresponseheaders.X-Frame-Options=SAMEORIGIN"
+      - "traefik.http.middlewares.anvil_forkserver_ui_header.headers.customresponseheaders.X-XSS-Protection=1;mode=block"
+      - "traefik.http.middlewares.anvil_forkserver_ui_header.headers.customresponseheaders.X-Content-Type-Options=nosniff"
+      - "traefik.http.routers.anvil_forkserver_ui.middlewares=anvil_forkserver_ui_header@docker"
+
+      #HSTS Headers
+      - "traefik.http.middlewares.anvil_forkserver_ui_header.headers.stsincludesubdomains=false"
+      - "traefik.http.middlewares.anvil_forkserver_ui_header.headers.stspreload=true"
+      - "traefik.http.middlewares.anvil_forkserver_ui_header.headers.stsseconds=31536000"
+      - "traefik.http.middlewares.anvil_forkserver_ui_header.headers.isdevelopment=false"
+
+networks:
+  traefik:
+    external: true

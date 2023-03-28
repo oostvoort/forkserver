@@ -9,9 +9,9 @@ services:
     environment:
       - SERVER_PORT=3000
       - FORK_PORT=8545
-      - FORK_CHAIN_ID=1337
+      - FORK_CHAIN_ID=31337
       - FORK_MNEMONIC=test test test test test test test test test test test junk
-      - FORK_BLOCK_NUMBER=27954073
+      - FORK_BLOCK_NUMBER=0
       - FORK_JSON_RPC_URL=
       - FORK_BLOCK_TIME=0
   dashboard:
