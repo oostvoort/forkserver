@@ -101,3 +101,4 @@ fabric.properties
 .idea
 /server/node_modules/.yarn-integrity
 /server/yarn.lock
+docker-compose.yml

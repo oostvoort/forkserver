@@ -27,7 +27,7 @@ It's recommended to use docker for running locally by using the provided docker-
 - A JSON RPC Endpoint with archive capabilities like [Infura](https://www.infura.io/), [QuickNode](https://www.quicknode.com/) or [Alchemy](https://www.alchemy.com/)
 
 ### Installation
-1. Copy the provided docker-compose.yml in this repository
+1. Make a copy of the dev template docker-compose.dev.yml as docker-compose.yml
 2. Configure the environment variables as needed
 3. Run `docker compose up -d`
 
