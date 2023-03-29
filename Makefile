@@ -26,3 +26,4 @@ docker-push-caddy:
 
 docker-build-push-all: docker-build-server docker-build-dashboard docker-build-caddy docker-push-dashboard docker-push-server docker-push-caddy
 
+docker-build-push-dashboard: docker-build-dashboard docker-push-dashboard
